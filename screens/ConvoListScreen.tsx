@@ -9,11 +9,8 @@ const ConvoListScreen = ({navigation}) => {
 
     <TouchableOpacity
       style={styles.gridItem}
-      onPress={() => {navigation.navigate({
-        routeName: 'Convo',
-        params: {
-          convoId: itemData.item.id
-        }
+      onPress={() => {navigation.navigate('Convo', {
+        convoId: itemData.item.id
       })}}>
       <View><Text>{itemData.item.contact}</Text></View>
 
