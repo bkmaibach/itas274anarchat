@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import Colors from '../constants/Colors';
 
 const ConvoListTile = ({title, onSelect}) => {
   return ( 
     <TouchableOpacity
-      style={styles.gridItem}
+      style={styles.listItem}
       onPress={onSelect}>
       <View><Text>{title}</Text></View>
     </TouchableOpacity>
@@ -13,11 +14,12 @@ const ConvoListTile = ({title, onSelect}) => {
 
 const styles = StyleSheet.create(
   {
-    gridItem: {
-      backgroundColor: 'grey',
-      flex: 1,
+    listItem: {
+      backgroundColor: Colors.neutral,
+      //flex: 1,
       margin: 15,
-      height: 100
+      height: 100,
+      alignItems: 'stretch',
     },
   }
 );

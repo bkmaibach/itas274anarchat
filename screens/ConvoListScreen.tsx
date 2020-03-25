@@ -20,7 +20,7 @@ const ConvoListScreen = ({navigation}) => {
   );
 
   return (
-    <View style={styles.screen}>
+    <View style={{flex: 1}}>
       <FlatList data={conversations} renderItem={renderListItem} />
     </View>
   );
@@ -29,14 +29,17 @@ const ConvoListScreen = ({navigation}) => {
 const styles = StyleSheet.create(
   {
     imageStyle: {
-      height: 45,
-      width: 45,
-      margin: 25,
+      height: 55,
+      width: 55,
+      margin: 20,
+      borderWidth: 2,
+      borderColor: '#000000',
     },
     textStyle: {
       color: 'white',
       fontWeight: 'bold',
-      textAlign: 'right',
+      // textAlign: 'right',
+      //marginLeft: 150,
       margin: 25,
       fontSize: 35,
     },
@@ -45,6 +48,7 @@ const styles = StyleSheet.create(
       justifyContent: 'center',
       alignItems: 'center'
     }
+
   }
 );
 
