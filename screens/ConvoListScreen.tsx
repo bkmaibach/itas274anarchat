@@ -6,18 +6,24 @@ import { conversations } from '../data/dummyData';
 const ConvoListScreen = ({navigation}) => {
 
   const renderListItem = (itemData) => (
-    <TouchableOpacity style={styles.gridItem} onPress={() => {navigation.navigate('Convo')}}>
-      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-        <Image style={styles.imageStyle} source={require('../assets/defaultImg.jpg')}></Image>
-        <Text style={styles.textStyle}>{itemData.item.contact}</Text>
-      </View>
+
+    <TouchableOpacity
+      style={styles.gridItem}
+      onPress={() => {navigation.navigate({
+        routeName: 'Convo',
+        params: {
+          convoId: itemData.item.id
+        }
+      })}}>
+      <View><Text>{itemData.item.contact}</Text></View>
+
     </TouchableOpacity>
   );
 
   return (
-    <>
-    <FlatList data={conversations} renderItem={renderListItem} />
-    </>
+    <View style={styles.screen}>
+      <FlatList data={conversations} renderItem={renderListItem} />
+    </View>
   );
 }
 
