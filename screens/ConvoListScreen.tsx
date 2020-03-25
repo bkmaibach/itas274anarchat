@@ -47,7 +47,8 @@ const styles = StyleSheet.create(
       backgroundColor: 'grey',
       flex: 1,
       margin: 15,
-      height: 100
+      height: 100,
+      width: 300
     },
   }
 );
