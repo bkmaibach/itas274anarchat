@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, Image } from 'react-native';
-import { conversations } from '../data/dummyData';
+import { conversations } from '../data/convoListQuery';
 import { enableScreens } from 'react-native-screens';
 import ConvoListTile from '../components/ConvoListTile';
 

@@ -1,0 +1,26 @@
+import { IParticipant } from "../types"
+
+export const participant = {
+  id: "1",
+  publicKey: `-----BEGIN PUBLIC KEY-----
+  MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCPidkgqLocbkpCpespMmV9fpzm
+  wKfK1yQ49TwecKsoTBbV3jSMU0/2U4MHUFbdSpZCL4rKn0FRRkGRQ4A06iVd5y5y
+  NbfAx49je7Fiwl5mC70NOwisVSVUv0M7epDJEiI4BF1bSdgBZe+6vyJ6Cd/6WlYK
+  aYRQkJtzuq++WlGvWwIDAQAB
+  -----END PUBLIC KEY-----`,
+  privateKey: `-----BEGIN RSA PRIVATE KEY-----
+  MIICXAIBAAKBgQCPidkgqLocbkpCpespMmV9fpzmwKfK1yQ49TwecKsoTBbV3jSM
+  U0/2U4MHUFbdSpZCL4rKn0FRRkGRQ4A06iVd5y5yNbfAx49je7Fiwl5mC70NOwis
+  VSVUv0M7epDJEiI4BF1bSdgBZe+6vyJ6Cd/6WlYKaYRQkJtzuq++WlGvWwIDAQAB
+  AoGAMcmSsq1TwMDQqUV7yBJe+aSNL8zrZoQxYEBP1g8mjxe1ZAFrILFVLw/Qhxzq
+  xF82t0ZeUeHjehlwbL6JHdGJm/wdofduleAMMAxSvzbf+QUXeYHEdL5MzzOotyL/
+  /3y2OYmrgGNyO2sZimF1TXEWXXuN+f4icHBuTS2f98cSOKECQQDxtx/GjVf2gLu6
+  aTYh4r772oFwRprPfX368tKVfgoCcifvJ02frDpKhvloTQr9IglGol4Iz3k5Akgg
+  BCFSRSY/AkEAmAVrsYNcn9fVHHhKEbHBON8u79q5yQckBDx3t+a1MCWnfFsxlCij
+  JRVbdHpcpNJRoqQR3ddRYt/JCwD2AmVH5QJBALhUiFzoSR5oycC8n1V0D2UNGwy+
+  Kyz0bHBFYSYzufpnh+CvPlj4BHP1Ppm1tx2XKS++fquFXNKG1O3leGu+5A0CQHf/
+  F2H4cd2OTZ76aGUNLZsJuJAF086Vv11Eqa9VAcJuhoUHqtvrM9QqxpTrnUNQ7LV3
+  0s6MjqaARL5V1NpRPe0CQDbsUksnY2tjG7bQXvytZ/Vn9Z9L/VykUrF3aBoHL4LO
+  bcuIsWCxGkKMvJJk79DBa9LuXS+mGASqN+FPlkPjuLs=
+  -----END RSA PRIVATE KEY-----`
+}  ;

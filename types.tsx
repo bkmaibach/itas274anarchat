@@ -1,15 +1,34 @@
-export interface IConvo {
+export interface ICloudConvo {
   id: string,
-  contact: string,
+  participantIds: string[],
   messages: IMessage[]
 }
 
 export interface IMessage {
+  senderId: string,
   text: string,
   timestamp: number
 }
 
-export interface IConvoParams {
+export interface IParticipant {
   id: string,
-  title: string
+  publicKey: string,
+  privateKey: string
+}
+
+export interface ILocalConvo {
+  id: string,
+  contact: string,
+  publicKey: string
+}
+
+export interface IQRData {
+  id: string,
+  publicKey: string
+}
+
+export interface IConvoListItem {
+  id: string,
+  contact: string,
+  lastMessageText: string
 }

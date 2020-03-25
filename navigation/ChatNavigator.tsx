@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Colors from '../constants/Colors';
 import ConvoListScreen from '../screens/ConvoListScreen';
 import ConvoScreen from '../screens/ConvoScreen';
+import NewConvoScreen from '../screens/ConvoScreen';
 // import CategoryMealsScreen from '../screens/CategoryMealsScreen';
 // import MealDetailsScreen from '../screens/MealDetailsScreen';
 
@@ -28,10 +29,6 @@ function ChatNavigator() {
           component={ConvoListScreen}
           options={{
             title: 'Conversations',
-            headerStyle: {
-              backgroundColor: Colors.primary,
-            },
-            headerTintColor: 'white'
           }}
         />
         <Stack.Screen
@@ -40,6 +37,13 @@ function ChatNavigator() {
           options={({route}) => ({
             title: route.params["title"],
           })}
+        />
+        <Stack.Screen
+          name='NewConvo'
+          component={NewConvoScreen}
+          options={{
+            title: 'New Conversation',
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

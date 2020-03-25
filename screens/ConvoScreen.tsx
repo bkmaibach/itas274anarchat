@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity } from 'react-native';
-import { conversations } from '../data/dummyData';
+import { conversations } from '../data/convoListQuery';
 // import { categories } from '../data/dummyData';
 /* LIAM: Create a list of all ongoing conversations that the user can choose from */
 const ConvoScreen = ({route, navigation}) => {
