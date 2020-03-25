@@ -1,6 +1,6 @@
 import { IConvoListItem } from "../types"
 
-export const conversations: IConvoListItem[] = [
+export const convoListQuery: IConvoListItem[] = [
   {id: "c1", contact: "Keith", lastMessageText: "Hey"},
   {id: "c2", contact: "Bob", lastMessageText: "Howdy"},
   {id: "c3", contact: "Fred", lastMessageText: "sup"},

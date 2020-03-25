@@ -1,6 +1,6 @@
 import { ICloudConvo } from "../types"
 
-export const conversations: ICloudConvo[] = [
+export const cloudConvos: ICloudConvo[] = [
   {id: "c1",  participantIds: ["1", "2"], messages: [
     { senderId: "1", text: "Hey", timestamp: 1585096398},
     { senderId: "2", text: "whatsup", timestamp: 1585096397},

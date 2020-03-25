@@ -9,32 +9,44 @@
  */
 
 import React, { useState } from 'react';
-// import * as Font from 'expo-font';
-// import { AppLoading } from 'expo';
+import { enableScreens } from 'react-native-screens';
+import * as Font from 'expo-font';
+import { AppLoading } from 'expo';
 import ChatNavigator from "./navigation/ChatNavigator";
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import convosReducer from './store/reducers/convos';
 declare var global: {HermesInternal: null | {}};
+enableScreens();
 
-// const fetchFonts = () => {
-//   return Font.loadAsync({
-//     'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
-//     'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
-//   });
-// };
+
+const rootReducer = combineReducers({
+  convos: convosReducer
+});
+
+const store = createStore(rootReducer);
+
+const fetchFonts = () => {
+  return Font.loadAsync({
+    'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
+  });
+};
 
 const App = () => {
 
-  // const [fontLoaded, setFontLoaded] = useState(false);
+  const [fontLoaded, setFontLoaded] = useState(false);
   
-  // if (!fontLoaded) {
-  //   return <AppLoading
-  //     startAsync={fetchFonts}
-  //     onFinish={() => setFontLoaded(true)}
-  //     onError={(err) => console.log(err)}
-  //   />
-  // }
+  if (!fontLoaded) {
+    return <AppLoading
+      startAsync={fetchFonts}
+      onFinish={() => setFontLoaded(true)}
+      onError={(err) => console.log(err)}
+    />
+  }
 
   return (
-    <ChatNavigator />
+    <Provider store={store} ><ChatNavigator /></Provider>
   );
 };
 
