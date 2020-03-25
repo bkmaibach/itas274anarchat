@@ -5,6 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Colors from '../constants/Colors';
 import ConvoListScreen from '../screens/ConvoListScreen';
 import ConvoScreen from '../screens/ConvoScreen';
+import { Button } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 // import CategoryMealsScreen from '../screens/CategoryMealsScreen';
 // import MealDetailsScreen from '../screens/MealDetailsScreen';
 
@@ -28,6 +30,18 @@ function ChatNavigator() {
           component={ConvoListScreen}
           options={{
             title: 'Conversations',
+            headerRight: () => (
+              <Icon.Button
+                name="email-plus-outline"
+                onPress={() => alert('Create New Message')}>
+              </Icon.Button>
+            ),
+            headerLeft: () => (
+              <Icon.Button
+                name="qrcode-scan"
+                onPress={() => alert('Scan a QR')}>
+              </Icon.Button>
+            ),
             headerStyle: {
               backgroundColor: Colors.primary,
             },

@@ -27,28 +27,12 @@ const ConvoListScreen = ({navigation}) => {
 }
 
 const styles = StyleSheet.create(
-  {
-    imageStyle: {
-      height: 55,
-      width: 55,
-      margin: 20,
-      borderWidth: 2,
-      borderColor: '#000000',
-    },
-    textStyle: {
-      color: 'white',
-      fontWeight: 'bold',
-      // textAlign: 'right',
-      //marginLeft: 150,
-      margin: 25,
-      fontSize: 35,
-    },
+  { 
     screen: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center'
     }
-
   }
 );
 
