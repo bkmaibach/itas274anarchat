@@ -9,16 +9,22 @@ const ConvoListScreen = ({navigation}) => {
 
     <TouchableOpacity
       style={styles.gridItem}
-      onPress={() => {navigation.navigate('Convo', {
-        convoId: itemData.item.id
+      onPress={() => {navigation.navigate({
+        routeName: 'Convo',
+        params: {
+          convoId: itemData.item.id
+        }
       })}}>
-      <View><Text>{itemData.item.contact}</Text></View>
+      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+        <Image style={styles.imageStyle} source={require('../assets/defaultImg.jpg')}></Image>
+        <Text style={styles.textStyle}>{itemData.item.contact}</Text>
+      </View>
 
     </TouchableOpacity>
   );
 
   return (
-    <View style={styles.screen}>
+    <View style={{flex: 1}}>
       <FlatList data={conversations} renderItem={renderListItem} />
     </View>
   );
@@ -27,28 +33,26 @@ const ConvoListScreen = ({navigation}) => {
 const styles = StyleSheet.create(
   {
     imageStyle: {
-      height: 45,
-      width: 45,
-      margin: 25,
+      height: 55,
+      width: 55,
+      margin: 20,
+      borderWidth: 2,
+      borderColor: '#000000',
     },
     textStyle: {
       color: 'white',
       fontWeight: 'bold',
-      textAlign: 'right',
+      // textAlign: 'right',
+      //marginLeft: 150,
       margin: 25,
       fontSize: 35,
     },
-    screen: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
     gridItem: {
-      backgroundColor: 'grey',
-      flex: 1,
+      backgroundColor: '#b2b2b2',
+      //flex: 1,
       margin: 15,
       height: 100,
-      width: 300
+      alignItems: 'stretch',
     },
   }
 );
