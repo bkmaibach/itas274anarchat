@@ -1,6 +1,15 @@
-export interface ICategory {
+export interface IConvo {
   id: string,
   contact: string,
-  lastMessage: string
-  time: number
+  messages: IMessage[]
+}
+
+export interface IMessage {
+  text: string,
+  timestamp: number
+}
+
+export interface IConvoParams {
+  id: string,
+  title: string
 }

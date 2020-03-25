@@ -14,7 +14,15 @@ function ChatNavigator() {
   console.log("RENDERING NAVIGATOR");
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='ConvoList'>
+      <Stack.Navigator 
+        initialRouteName='ConvoList'
+        screenOptions={{
+          headerTintColor: "white",
+          headerStyle: {
+            backgroundColor: Colors.primary
+          }
+        }}
+      >
         <Stack.Screen
           name='ConvoList'
           component={ConvoListScreen}
@@ -29,7 +37,9 @@ function ChatNavigator() {
         <Stack.Screen
           name='Convo'
           component={ConvoScreen}
-          options={{title: 'Category Meals'}}
+          options={({route}) => ({
+            title: route.params["title"],
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>

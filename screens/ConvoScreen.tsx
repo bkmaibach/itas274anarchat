@@ -14,6 +14,16 @@ const ConvoScreen = ({route, navigation}) => {
   );
 }
 
+ConvoScreen.navigationOptions = (navigationData) => {
+  const convoId = navigationData.navigation.getParam('convoId');
+  const selectedConvo = conversations.find( convo => convo.id === convoId);
+
+  return {
+    headerTitle: selectedConvo.contact
+  };
+};
+
+
 const styles = StyleSheet.create(
   {
     screen: {

@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity, Image } from 'react-native';
 import { conversations } from '../data/dummyData';
+import { enableScreens } from 'react-native-screens';
+import ConvoListTile from '../components/ConvoListTile';
+
+enableScreens();
 // import { categories } from '../data/dummyData';
 /* LIAM: Create a list of all ongoing conversations that the user can choose from */
 const ConvoListScreen = ({navigation}) => {
 
   const renderListItem = (itemData) => (
-
-    <TouchableOpacity
-      style={styles.gridItem}
-      onPress={() => {navigation.navigate('Convo', {
-        convoId: itemData.item.id
-      })}}>
-      <View><Text>{itemData.item.contact}</Text></View>
-
-    </TouchableOpacity>
+    <ConvoListTile 
+      title={itemData.item.contact}
+      onSelect={() => { navigation.navigate('Convo', {
+        convoId: itemData.item.id,
+        title: itemData.item.contact
+      })}}
+    />
   );
 
   return (
@@ -42,13 +44,7 @@ const styles = StyleSheet.create(
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center'
-    },
-    gridItem: {
-      backgroundColor: 'grey',
-      flex: 1,
-      margin: 15,
-      height: 100
-    },
+    }
   }
 );
 
