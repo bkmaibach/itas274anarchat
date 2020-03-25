@@ -5,14 +5,16 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Colors from '../constants/Colors';
 import ConvoListScreen from '../screens/ConvoListScreen';
 import ConvoScreen from '../screens/ConvoScreen';
-import NewConvoScreen from '../screens/ConvoScreen';
+import NewConvoScreen from '../screens/NewConvoScreen';
+import { Button } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 // import CategoryMealsScreen from '../screens/CategoryMealsScreen';
 // import MealDetailsScreen from '../screens/MealDetailsScreen';
 
 const Stack = createStackNavigator();
 
 function ChatNavigator() {
-  console.log("RENDERING NAVIGATOR");
+  // console.log("RENDERING NAVIGATOR");
   return (
     <NavigationContainer>
       <Stack.Navigator 
@@ -25,11 +27,29 @@ function ChatNavigator() {
         }}
       >
         <Stack.Screen
+          name='NewConvo'
+          component={NewConvoScreen}
+          options={{
+            title: 'New Conversation',
+          }}
+        />
+        <Stack.Screen
           name='ConvoList'
           component={ConvoListScreen}
-          options={{
+          options={({navigation}) => ({
             title: 'Conversations',
-          }}
+
+            headerRight: () => (
+              <Icon.Button
+                name="email-plus-outline"
+                onPress={() => navigation.navigate('NewConvo')}>
+              </Icon.Button>
+            ),
+            headerStyle: {
+              backgroundColor: Colors.primary,
+            },
+            headerTintColor: 'white'
+          })}
         />
         <Stack.Screen
           name='Convo'
@@ -37,13 +57,6 @@ function ChatNavigator() {
           options={({route}) => ({
             title: route.params["title"],
           })}
-        />
-        <Stack.Screen
-          name='NewConvo'
-          component={NewConvoScreen}
-          options={{
-            title: 'New Conversation',
-          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
