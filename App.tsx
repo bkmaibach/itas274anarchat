@@ -17,6 +17,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import convosReducer from './store/reducers/convos';
 import ReduxThunk from 'redux-thunk';
+
 declare var global: {HermesInternal: null | {}};
 enableScreens();
 

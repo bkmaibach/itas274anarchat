@@ -1,54 +1,57 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Platform, KeyboardAvoidingView } from 'react-native';
+import {
+  StyleSheet, 
+  Text,
+  View,
+  Platform,
+  KeyboardAvoidingView,
+  YellowBox,
+  Keyboard,
+  TouchableWithoutFeedback, } from 'react-native';
 import { useSelector } from 'react-redux';
 import { GiftedChat } from 'react-native-gifted-chat';
 import Fire from "../Fire";
+import { Header } from '@react-navigation/stack';
 // import { conversations } from '../data/convoListQuery';
 // import { categories } from '../data/dummyData';
-/* LIAM: Create a list of all ongoing conversations that the user can choose from */
+
+
 const ConvoScreen = ({route, navigation}) => {
-  const { convoId, title } = route.params;
-  const convo = useSelector(state => state.convos.convos);
-  const selectedConvo = convo.find( convo => convo.id === convoId);
+  YellowBox.ignoreWarnings(['Setting a timer']);
+  const { recipientId, title } = route.params;
+
   const [messages, setMessages] = useState([]);
 
-  const getUser = () => ({
-    _id: Fire.uid,
-    name: title as string
-  })
-
 
   useEffect(() => {
-      Fire.get(message => 
+      Fire.get(recipientId, message => 
         setMessages((previous) => (GiftedChat.append(previous, message))));
+      return () => {
+        Fire.off();
+      }
   }, []);
 
-  useEffect(() => {
-    return () => {
-      Fire.off();
-    }
-  }, []);
 
-  const chat = <GiftedChat messages={messages} onSend={Fire.send} user={getUser()} />
+
   return (
-    <KeyboardAvoidingView
-      style={styles.avoidingView}
-      behavior="padding"
-      keyboardVerticalOffset={30}
-      enabled>
-        {chat}
-    </KeyboardAvoidingView>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <KeyboardAvoidingView
+        style={styles.screen}
+        behavior="padding"
+        keyboardVerticalOffset={80}
+        enabled>
+          <GiftedChat
+            messages={messages}
+            onSend={(messages) => { Fire.send(recipientId, messages) }}
+            user={{_id: Fire.uid, name: "Anonymous" }} />
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create(
   {
     screen: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-    avoidingView: {
       flex: 1
     }
   }

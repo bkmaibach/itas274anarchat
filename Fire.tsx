@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import { RSA } from 'react-native-rsa-native';
 
 class Fire {
 
@@ -28,7 +29,7 @@ class Fire {
     });
   };
 
-  send = messages => {
+  send = (toId, messages) => {
     messages.forEach( item => {
       const message = {
         text: item.text,
@@ -36,7 +37,7 @@ class Fire {
         user: item.user
       }
 
-      this.db.push(message);
+      this.getConvo(toId).push(message);
     });
   }
 
@@ -53,8 +54,8 @@ class Fire {
     };
   };
 
-  get = callback => {
-    this.db.on('child_added', snapshot => callback(this.parse(snapshot)));
+  get = (fromId, callback) => {
+    this.getConvo(fromId).on('child_added', snapshot => callback(this.parse(snapshot)));
   };
 
   off () {
@@ -62,7 +63,13 @@ class Fire {
   };
 
   get db() {
-    return firebase.database().ref("messages");
+    return firebase.database().ref("convos");
+  };
+
+  getConvo(secondId: string) {
+    console.log("MY UID IS " + this.uid);
+    const convoId = [this.uid, secondId].sort().join();
+    return this.db.child(convoId);
   };
 
   get uid() {

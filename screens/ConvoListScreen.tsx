@@ -13,7 +13,7 @@ const ConvoListScreen = ({navigation}) => {
     return <ConvoListTile 
       title={itemData.item.contact}
       onSelect={() => { navigation.navigate('Convo', {
-        convoId: itemData.item.id,
+        recipientId: itemData.item.id,
         title: itemData.item.contact
       })}}
     />

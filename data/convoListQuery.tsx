@@ -1,8 +1,8 @@
 import { IConvoListItem } from "../types"
-
+// VIRTUAL PIXEL 3 ID:
+// rqDa8JHa0xYXCDX4MWhLnuxXv0t2
 export const convoListQuery: IConvoListItem[] = [
-  {id: "c1", contact: "Keith", lastMessageText: "Hey"},
-  {id: "c2", contact: "Bob", lastMessageText: "Howdy"},
-  {id: "c3", contact: "Fred", lastMessageText: "sup"},
-  {id: "c4", contact: "Gary", lastMessageText: "lol"},
+  {id: "jrWZcHTP5ndAdaQOoRpx8QcZk4P2", contact: "Liam", lastMessageText: "Hey"},
+  {id: "wy06TC2sylONXLsQ84P5RrTQOjI2", contact: "Keith", lastMessageText: "Howdy"},
+  
 ]
