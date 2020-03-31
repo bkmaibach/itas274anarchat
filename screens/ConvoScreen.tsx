@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, FlatList, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Platform, KeyboardAvoidingView } from 'react-native';
 import { useSelector } from 'react-redux';
+import { GiftedChat } from 'react-native-gifted-chat';
+import Fire from "../Fire";
 // import { conversations } from '../data/convoListQuery';
 // import { categories } from '../data/dummyData';
 /* LIAM: Create a list of all ongoing conversations that the user can choose from */
@@ -8,10 +10,34 @@ const ConvoScreen = ({route, navigation}) => {
   const { convoId, title } = route.params;
   const convo = useSelector(state => state.convos.convos);
   const selectedConvo = convo.find( convo => convo.id === convoId);
+  const [messages, setMessages] = useState([]);
+
+  const getUser = () => ({
+    _id: Fire.uid,
+    name: title as string
+  })
+
+
+  useEffect(() => {
+      Fire.get(message => 
+        setMessages((previous) => (GiftedChat.append(previous, message))));
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      Fire.off();
+    }
+  }, []);
+
+  const chat = <GiftedChat messages={messages} onSend={Fire.send} user={getUser()} />
   return (
-    <View style={styles.screen}>
-      <Text>{JSON.stringify(selectedConvo, null, 2)}</Text>
-    </View>
+    <KeyboardAvoidingView
+      style={styles.avoidingView}
+      behavior="padding"
+      keyboardVerticalOffset={30}
+      enabled>
+        {chat}
+    </KeyboardAvoidingView>
   );
 }
 
@@ -22,12 +48,9 @@ const styles = StyleSheet.create(
       justifyContent: 'center',
       alignItems: 'center'
     },
-    gridItem: {
-      backgroundColor: 'grey',
-      flex: 1,
-      margin: 15,
-      height: 150
-    },
+    avoidingView: {
+      flex: 1
+    }
   }
 );
 

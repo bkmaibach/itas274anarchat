@@ -24,9 +24,7 @@ class Fire {
 
   checkAuth = () => {
     firebase.auth().onAuthStateChanged( user => {
-      if (!user) {
-        firebase.auth().signInAnonymously();
-      }
+      if (!user) { firebase.auth().signInAnonymously(); }
     });
   };
 
@@ -68,7 +66,7 @@ class Fire {
   };
 
   get uid() {
-    return (firebase.auth().currentUser || {});
+    return (firebase.auth().currentUser.uid);
   }
 }
 
