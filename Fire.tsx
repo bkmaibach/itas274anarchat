@@ -1,14 +1,18 @@
 import firebase from 'firebase';
-import { RSA } from 'react-native-rsa-native';
+import { RSA, RSAKeychain } from 'react-native-rsa-native';
+const keyTag = "com.anarchat.mykey";
 
 class Fire {
+
+  pubKey;
 
   constructor() {
     this.init();
     this.checkAuth();
+    this.initKeys();
   }
 
-  init = () => {
+  init = async () => {
     if (!firebase.apps.length) {
       firebase.initializeApp({
         apiKey: "AIzaSyDaOvZWpTUAo3g0CxOruMVG4rxtEhEXEuw",
@@ -29,10 +33,28 @@ class Fire {
     });
   };
 
+  initKeys = async () => {
+    console.log("RUNNING " + RSAKeychain );
+    console.log("RUNNING " + RSA );
+    // this.pubKey = await RSAKeychain.generateKeys(keyTag, 2048);
+    console.log("INITIALIZED WITH PUBLIC KEY " + this.pubKey);
+  }
+
+  // TEMPORARY DUMMY FUNCTION
+  getEncryptingKey(uid){
+    return this.pubKey;
+  }
+
   send = (toId, messages) => {
-    messages.forEach( item => {
+    
+
+    messages.forEach( async item => {
+      const signedText = await RSAKeychain.sign(item.text, keyTag)
+      const encryptingKey = this.getEncryptingKey(toId);
+      const cypherText = RSA.encrypt(signedText, encryptingKey)
+
       const message = {
-        text: item.text,
+        text: cypherText,
         timestamp: firebase.database.ServerValue.TIMESTAMP,
         user: item.user
       }

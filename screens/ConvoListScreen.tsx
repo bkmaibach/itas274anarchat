@@ -7,7 +7,7 @@ import ConvoListTile from '../components/ConvoListTile';
 /* LIAM: Create a list of all ongoing conversations that the user can choose from */
 const ConvoListScreen = ({navigation}) => {
 
-  const convosList = useSelector(state => state.convos.convosList);
+  const convos = useSelector(state => state.convos.convos);
 
   const renderListItem = (itemData) => {
     return <ConvoListTile 
@@ -21,7 +21,7 @@ const ConvoListScreen = ({navigation}) => {
 
   return (
     <View style={styles.screen}>
-      <FlatList data={convosList} renderItem={renderListItem} />
+      <FlatList data={convos} renderItem={renderListItem} />
     </View>
   );
 }

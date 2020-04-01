@@ -1,10 +1,8 @@
-import { cloudConvos } from '../../data/cloudConvos';
-import { convoListQuery } from '../../data/convoListQuery';
+import { convos } from '../../data/convos';
 import { ADD_CONVO } from '../actions/convos';
 
 const initialState = {
-  convos: cloudConvos,
-  convosList: convoListQuery
+  convos
 }
 
 const convosReducer = (state = initialState, action) => {

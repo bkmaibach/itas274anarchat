@@ -27,8 +27,8 @@ export interface IQRData {
   publicKey: string
 }
 
-export interface IConvoListItem {
+export interface IConvo {
   id: string,
   contact: string,
-  lastMessageText: string
+  encryptingKey: string
 }
