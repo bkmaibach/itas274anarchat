@@ -7,6 +7,7 @@ class Fire {
   pubKey;
 
   constructor() {
+    console.log("CONSTRUCTING FIRE");
     this.init();
     this.checkAuth();
     this.initKeys();
@@ -34,44 +35,52 @@ class Fire {
   };
 
   initKeys = async () => {
-    console.log("RUNNING " + RSAKeychain );
-    console.log("RUNNING " + RSA );
-    // this.pubKey = await RSAKeychain.generateKeys(keyTag, 2048);
-    console.log("INITIALIZED WITH PUBLIC KEY " + this.pubKey);
+    const pubKeyObject = await RSAKeychain.generateKeys(keyTag, 2048);
+    this.pubKey = pubKeyObject.public;
   }
 
   // TEMPORARY DUMMY FUNCTION
-  getEncryptingKey(uid){
+  getPublicKey(uid){
+    console.log("RETURNING PUBKEY" + this.pubKey);
     return this.pubKey;
   }
 
   send = (toId, messages) => {
-    
+    console.log("IN SEND");
 
     messages.forEach( async item => {
-      const signedText = await RSAKeychain.sign(item.text, keyTag)
-      const encryptingKey = this.getEncryptingKey(toId);
-      const cypherText = RSA.encrypt(signedText, encryptingKey)
-
+      console.log("ITEM " + JSON.stringify(item));
+      const signature = await RSAKeychain.sign(item.text, keyTag)
+      const publicKey = this.getPublicKey(toId);
+      const cypherText = await RSA.encrypt(item.text, publicKey)
+      console.log("CYPHER TEXT SENT: " + cypherText);
       const message = {
         text: cypherText,
+        signature,
         timestamp: firebase.database.ServerValue.TIMESTAMP,
         user: item.user
       }
-
+      
+      console.log("MESSAGE " + JSON.stringify(message));
       this.getConvo(toId).push(message);
     });
   }
 
-  parse = message => {
-    const {user, text, timestamp} = message.val();
+  parse = async message => {
+    console.log("IN PARSE");
+    const {user, timestamp, text, signature} = message.val();
+    const signedText = await RSAKeychain.decrypt(text, keyTag);
+    console.log("SIGNED TEXT: " + signedText);
+    const warning = await RSAKeychain.verify(signature, signedText, this.getPublicKey(user._id)) ?
+    "" : "**WARNING** - THE SOURCE OF THIS MESSAGE COULD NOT BE VERIFIED AND IS LIKELY FRAUDULENT: ";
+    
     const {key: _id} = message;
     const createdAt = new Date(timestamp);
 
     return {
       _id,
       createdAt,
-      text,
+      text: warning + signedText,
       user
     };
   };
