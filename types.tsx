@@ -5,9 +5,15 @@ export interface ICloudConvo {
 }
 
 export interface IMessage {
-  senderId: string,
+  signature: string,
   text: string,
-  timestamp: number
+  timestamp: number,
+  user: IUser
+}
+
+export interface IUser {
+  _id: string,
+  name: string
 }
 
 export interface IParticipant {
