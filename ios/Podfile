@@ -43,4 +43,6 @@ target 'anarchat' do
 
   # react-native-cli autolinking
   use_native_modules!
+  pod 'RNPermissions', :path => '../node_modules/react-native-permissions'
+
 end
