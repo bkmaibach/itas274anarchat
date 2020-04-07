@@ -37,6 +37,9 @@ class Contact {
   };
 
   addRow(id, publicKey, name) {
+    console.log("ADDING ID: " + id);
+    console.log("ADDING PUBKEY: " + publicKey);
+    console.log("ADDING NAME: " + name);
     this.db.executeSql('INSERT INTO Contact (_id, publicKey, name)' 
     + `VALUES ('${id}', '${publicKey}', '${name}')`, [],
     () => {});
@@ -46,7 +49,7 @@ class Contact {
     return new Promise<IContact[]>( (resolve, reject ) => {
           console.log("Database is ready ... executing query ...");
           this.db.transaction(async (tx) => {
-            await tx.executeSql(`SELECT '_id', 'publicKey', 'name' AS data FROM Contact c`, [],
+            await tx.executeSql(`SELECT * FROM Contact`, [],
             (tx,results) => {
               console.log("Query completed: " + JSON.stringify(results));
               resolve(results.rows)

@@ -18,14 +18,14 @@ import { Header } from '@react-navigation/stack';
 
 const ConvoScreen = ({route, navigation}) => {
   YellowBox.ignoreWarnings(['Setting a timer']);
-  const { recipientId, title } = route.params;
+  const { recipientId, publicKey } = route.params;
 
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     console.log("USING EFFECT");
     // Fire.send(recipientId, messages)
-    Fire.get(recipientId, message => {
+    Fire.get(recipientId, publicKey, message => {
       // console.log("GOT MESSAGE " + JSON.stringify(message, null, 2));
       return setMessages((previous) => (GiftedChat.append(previous, message)))
     });
@@ -45,7 +45,7 @@ const ConvoScreen = ({route, navigation}) => {
         enabled>
           <GiftedChat
             messages={messages}
-            onSend={(messages) => { Fire.send(recipientId, messages) }}
+            onSend={(messages) => { Fire.send(recipientId, publicKey, messages) }}
             user={{_id: Fire.uid, name: "Anonymous" }} />
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>

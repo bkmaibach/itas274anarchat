@@ -9,6 +9,7 @@ class Fire {
   publicKey;
   privateKey;
   test;
+  idToPubKeyMap;
 
   constructor() {
     //console.log("CONSTRUCTING FIRE");
@@ -18,6 +19,7 @@ class Fire {
       this.publicKey = keyPair.public;
       this.privateKey = keyPair.private;
     });
+
   }
 
 
@@ -44,10 +46,12 @@ class Fire {
 
   // TEMPORARY DUMMY FUNCTION
   getPublicKey(uid){
-    return this.publicKey;
+    if (uid == this.uid) return this.publicKey;
+    return this.idToPubKeyMap[uid];
   }
 
-  send = (toId, messages) => {
+  send = (toId, publicKey, messages) => {
+    this.idToPubKeyMap[toId] = this.idToPubKeyMap[toId] || publicKey;
     // console.log("SENDING MESSAGES: " + JSON.stringify(messages, null, 2));
 
     messages.forEach( async item => {
@@ -64,7 +68,8 @@ class Fire {
     });
   }
 
-  get = async (fromId, callback) => {
+  get = async (fromId, publicKey, callback) => {
+    this.idToPubKeyMap[fromId] = this.idToPubKeyMap[fromId] || publicKey;
     console.log("MY PUBKEY: " + this.publicKey);
     this.getConvo(fromId).on('child_added', async (snapshot) => {
       console.log("CHILD ADDED, SNAPSHOT IS " + JSON.stringify(snapshot, null, 2));

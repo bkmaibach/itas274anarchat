@@ -20,11 +20,10 @@ const NewConvoScreen = ({}) => {
     try {
       const qrString = e.data;
       // console.log("OBTAINED QR STRING: " + qrString);
-      const fields = qrString.split(",");
-      const id = fields[0];
-      const publicKey = fields[1];
+
+      const [id, publicKey] = qrString.split(",");
+
       await Contact.addRow(id, publicKey, name);
-      console.log("FIELDS: ", JSON.stringify(fields, null, 2));
     } catch (err) {
       console.log("Key did not save" + err);
     }
