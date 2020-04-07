@@ -1,8 +1,7 @@
 import firebase from 'firebase';
-import { RSA, RSAKeychain } from 'react-native-rsa-native';
 import { IMessage } from "./types"
 import { AsyncStorage } from 'react-native';
-const keyTag = "net.keither.keys";
+import getKeys from './keys';
 
 class Fire {
 
@@ -14,36 +13,12 @@ class Fire {
     //console.log("CONSTRUCTING FIRE");
     this.init();
     this.checkAuth();
-
-  }
-
-  storeKeys = async () => {
-    const keyPair = await RSA.generateKeys(2048);
-    const storeString = JSON.stringify(keyPair);
-    try {
-      await AsyncStorage.setItem(keyTag, storeString);
+    getKeys().then((keyPair) => {
       this.publicKey = keyPair.public;
       this.privateKey = keyPair.private;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    });
+  }
 
-  initKeys = async () => {
-    try {
-      const value = await AsyncStorage.getItem(keyTag);
-      if (value !== null) {
-        const keyPair = JSON.parse(value);
-        this.publicKey = keyPair.public;
-        this.privateKey = keyPair.private;
-        console.log(value);
-      } else {
-        await this.storeKeys();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   init = async () => {
     if (!firebase.apps.length) {

@@ -1,26 +1,41 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Linking } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import QRCode from 'react-native-qrcode-svg'
 import QRCodeScanner from 'react-native-qrcode-scanner';
+import Fire from "../Fire";
+import getKeys from "../keys";
+
 
 const NewConvoScreen = ({}) => {
-  const key = {
-    "_id": "pCs9SGdPvAS59NmtnzuGVImTn132",
-    "publicKey": "-----BEGIN PUBLIC KEY-----MIIBITANBgkqhkiG9w0BAQEFAAOCAQ4AMIIBCQKCAQByDYC+/YyKYQplZ17iAyMq1XGLOMIcfSlKQCPGkIZWqrQsgGlTlRNeJHgbwpcR15S1qtwkWszeaanrB1h4BQaVV3yf8wlerui+1p+Yv24ZyUaRCyzTPjwaedFJ6iVYP0UA0iBrZUWfeWxcNimM+AWGQioKFhdD7BvIzvn9LBOt0x571D2v7K2LmWZPvLgE/gvwLT85gvcENQ3hamGpFaZuupeWvzHUeChS8mz2/fmEX9RTV1OSwLmWb438x6pLJ0OuZlUtJWpoxS0tVlnIzBIyCE98a0hj+a6rVLevrtxoSwrL+/TaQuU41nB3TfiPenyStJa/f2grB8UAwqb8w4pJAgMBAAE=-----END PUBLIC KEY-----" 
-  }
-  const stringKey = JSON.stringify({key}).slice(7,-1)
+
+  const [publicKey, setPublicKey] = useState("");
 
   const onSuccess = (e) => {
-    Linking.openURL(e.data).catch(err =>
-      console.error('An error occured', err)  
-    );
+    const data = e.data;
+    console.log(data);
+    // Linking.openURL(e.data).catch(err =>
+    //   console.error('An error occured', err)  
+    // );
   };
+
+  useEffect(() => {
+    console.log("USING EFFECT FOR KEY RETRIEVAL");
+    getKeys().then( (keys) => {
+      setPublicKey(keys.public);
+    }).catch( (err) => {
+      console.log(err);
+    });
+  }, []);
+
+  const qrData = {_id: Fire.uid, publicKey};
+  const stringData = JSON.stringify(qrData);
+  console.log(stringData);
 
   return(
     <>
-      <View  style={styles.qrCode}>
+      <View style={styles.qrCode}>
         <QRCode
-          value={stringKey}
+          value={stringData}
           size={300}
         />
       </View>

@@ -11,6 +11,11 @@ export interface IMessage {
   user: IUser
 }
 
+export interface IKeyPair {
+  public: string,
+  private: string
+}
+
 export interface IUser {
   _id: string,
   name: string
