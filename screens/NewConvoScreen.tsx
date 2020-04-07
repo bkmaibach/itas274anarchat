@@ -5,6 +5,7 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import Fire from "../Fire";
 import getKeys from "../keys";
 import AsyncStorage from '@react-native-community/async-storage';
+import Contact from '../Contact';
 
 const NewConvoScreen = ({}) => {
 
@@ -17,13 +18,15 @@ const NewConvoScreen = ({}) => {
   }
   const onSuccess = async (e) => {
     try {
-      var e = JSON.parse(e);
-      e.name = name;
-      e = JSON.stringify(e);
-      await AsyncStorage.setItem(e.data._id,e.data);
-      console.log(e.data);
-    } catch (e) {
-      console.log("Key did not save" + e)
+      const qrString = e.data;
+      // console.log("OBTAINED QR STRING: " + qrString);
+      const fields = qrString.split(",");
+      const id = fields[0];
+      const publicKey = fields[1];
+      await Contact.addRow(id, publicKey, name);
+      console.log("FIELDS: ", JSON.stringify(fields, null, 2));
+    } catch (err) {
+      console.log("Key did not save" + err);
     }
   };
 

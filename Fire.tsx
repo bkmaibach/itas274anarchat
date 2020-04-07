@@ -2,6 +2,7 @@ import firebase from 'firebase';
 import { IMessage } from "./types"
 import { AsyncStorage } from 'react-native';
 import getKeys from './keys';
+import { RSA, RSAKeychain } from 'react-native-rsa-native';
 
 class Fire {
 
@@ -64,10 +65,8 @@ class Fire {
   }
 
   get = async (fromId, callback) => {
-    await this.initKeys();
     console.log("MY PUBKEY: " + this.publicKey);
     this.getConvo(fromId).on('child_added', async (snapshot) => {
-      console.log("KEY TAG: " + keyTag);
       console.log("CHILD ADDED, SNAPSHOT IS " + JSON.stringify(snapshot, null, 2));
       try {
         const {key: _id} = snapshot;

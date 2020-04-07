@@ -14,7 +14,7 @@ const storeKeys = async () => {
   }
 };
 
-const getKeys = async (): Promise<KeyPair> => {
+const getKeys = async (): Promise<IKeyPair> => {
   try {
     const value = await AsyncStorage.getItem(keyTag);
     if (value !== null) {

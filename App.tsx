@@ -10,13 +10,12 @@
 
 import React, { useState } from 'react';
 import { enableScreens } from 'react-native-screens';
-// import * as Font from 'expo-font';
-// import { AppLoading } from 'expo';
 import ChatNavigator from "./navigation/ChatNavigator";
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import convosReducer from './store/reducers/convos';
 import ReduxThunk from 'redux-thunk';
+import SQLite from 'react-native-sqlite-storage';
 
 declare var global: {HermesInternal: null | {}};
 enableScreens();
