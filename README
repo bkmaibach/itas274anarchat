@@ -1,0 +1,22 @@
+README:
+
+Enviroment Setup: 
+
+Run through the react native enviroment setup here:
+
+https://reactnative.dev/docs/environment-setup
+
+You will need to do the React Native CLI Quickstart not the Expo.
+
+Install all the dependancies with:
+
+npm install
+
+To run the application:
+
+npm start 	Will start the metro bundler enviroment
+
+yarn android	Will compile the code and launch it into the bundler 
+
+You will need to either have a running virtual android device or have
+a physical device connected directly to your computer.
