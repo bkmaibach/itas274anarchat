@@ -2,7 +2,7 @@
 
 Run through the react native enviroment setup here:
 
-https://reactnative.dev/docs/environment-setup
+[https://reactnative.dev/docs/environment-setup]
 
 You will need to do the React Native CLI Quickstart not the Expo.
 
