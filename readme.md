@@ -29,12 +29,12 @@ a physical device connected directly to your computer with USB debugging enabled
 
 ** Resources used: **
 
-* https://reactnavigation.org/
+* [https://reactnavigation.org/]
 
 
 The navigator is the system that defines which screens are available. Because the ChatNavigator
 is a stack navigator, that means the back button on an android device will easily bring the user
- back to the previous screen, "popping" that screen off a stack.
+back to the previous screen, "popping" that screen off a stack.
 
 The navigator also defines some parameters each screen will use. For example, in the ConvoScreen
 the route params recipientId and publicKey are determined by the touch event in the previous
@@ -48,8 +48,8 @@ ConvoListScreen are also defined in the ChatNavigator.
 
 ** Resources used: **
 
-* https://www.youtube.com/watch?v=eR1vP-W1emI
-* https://github.com/FaridSafi/react-native-gifted-chat
+* [https://www.youtube.com/watch?v=eR1vP-W1emI]
+* [https://github.com/FaridSafi/react-native-gifted-chat]
 
 This project uses the firebase Real Time (RT) Database to hold conversations. With Expo managed
 worksflow having been removed ("ejected") from the project, it is possible that this could be
@@ -79,7 +79,7 @@ incomming messages or fetches previously sent messages depending on the source.
 
 ** Resources used: **
 
-* https://github.com/andpor/react-native-sqlite-storage
+* [https://github.com/andpor/react-native-sqlite-storage]
 
 This is the code that interacts with the local SQLite database. This database is what holds
 the public keys and chosen aliases identified by a particular ID.
@@ -94,8 +94,8 @@ to be used later.
 
 ** Resources used: **
 
-* https://github.com/moaazsidat/react-native-qrcode-scanner
-* https://github.com/awesomejerry/react-native-qrcode-svg#readme
+* [https://github.com/moaazsidat/react-native-qrcode-scanner]
+* [https://github.com/awesomejerry/react-native-qrcode-svg#readme]
 
 This screen makes use of two technologies, one for generating QR codes and one for scanning
 them. This provides a means for the sharing of public keys that allow encryption and
