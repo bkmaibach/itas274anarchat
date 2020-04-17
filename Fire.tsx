@@ -15,9 +15,12 @@ class Fire {
     //console.log("CONSTRUCTING FIRE");
     this.init();
     this.checkAuth();
+    this.idToPubKeyMap = [];
     getKeys().then((keyPair) => {
       this.publicKey = keyPair.public;
       this.privateKey = keyPair.private;
+    }).catch((err) => {
+      console.log("Error retrieving keys: " + err)
     });
 
   }
@@ -51,12 +54,14 @@ class Fire {
   }
 
   send = (toId, publicKey, messages) => {
-    this.idToPubKeyMap[toId] = this.idToPubKeyMap[toId] || publicKey;
-    // console.log("SENDING MESSAGES: " + JSON.stringify(messages, null, 2));
-
+    console.log("SENDING MESSAGES: " + JSON.stringify(messages, null, 2));
     messages.forEach( async item => {
+      const breakDown = publicKey.split("\\n");
+      publicKey = breakDown.join("\n");
+      console.log("PUBLIC KEY " + publicKey);
+      this.idToPubKeyMap[toId] |= publicKey;
       const signature = await RSA.sign(item.text, this.privateKey);
-      const publicKey = this.getPublicKey(toId);
+      // const publicKey = this.getPublicKey(toId);
       const cypherText = await RSA.encrypt(item.text, publicKey)
       const message = {
         text: cypherText,
@@ -68,32 +73,51 @@ class Fire {
     });
   }
 
-  get = async (fromId, publicKey, callback) => {
-    this.idToPubKeyMap[fromId] = this.idToPubKeyMap[fromId] || publicKey;
-    console.log("MY PUBKEY: " + this.publicKey);
-    this.getConvo(fromId).on('child_added', async (snapshot) => {
-      console.log("CHILD ADDED, SNAPSHOT IS " + JSON.stringify(snapshot, null, 2));
+  get = async (recipientId, publicKey, callback) => {
+    console.log("IN GET");
+    this.idToPubKeyMap[recipientId] |= publicKey;
+    // console.log("MY PUBKEY: " + this.publicKey);
+    this.getConvo(recipientId).on('child_added', async (snapshot) => {
+      // console.log("CHILD ADDED, SNAPSHOT IS " + JSON.stringify(snapshot, null, 2));
       try {
+        console.log("IN TRY");
         const {key: _id} = snapshot;
         const {user, timestamp, text, signature} = snapshot.val();
         const createdAt = new Date(timestamp);
-        const signedText = await RSA.decrypt(text, this.privateKey);
-        // const signedText = text;
-        console.log("SIGNED TEXT:" + signedText);
-  
-        const warning = await RSA.verify(signature, signedText, this.getPublicKey(user._id)) ?
-        "AUTHENTICATED " : "**WARNING** - THE SOURCE OF THIS MESSAGE COULD NOT BE VERIFIED AND IS LIKELY FRAUDULENT: ";
-  
-        const message = {
-          _id,
-          createdAt,
-          text: warning + signedText,
-          user
-        };
-        callback(message);
+        console.log("FROM ID: " + recipientId);
+        console.log("MY ID: " + this.uid);
+        if (recipientId != this.uid) {
+          console.log("MESSAGE WAS SENT BY ME");
+          // The recipients private key is needed to run the decryption line, which this client
+          // Does not have access to.
+          // A new database table might be needed to store sent messages for future reference
+          const message = {
+            _id,
+            createdAt,
+            text: "LOCKED FOR RECIPIENT",
+            user
+          };
+          callback(message);
+        } else {
+          const signedText = await RSA.decrypt(text, this.privateKey);
+          console.log("IN GET22");
+          // const signedText = text;
+          // console.log("SIGNED TEXT:" + signedText);
+    
+          const warning = await RSA.verify(signature, signedText, this.getPublicKey(user._id)) ?
+          "AUTHENTICATED " : "**WARNING** - THE SOURCE OF THIS MESSAGE COULD NOT BE VERIFIED AND IS LIKELY FRAUDULENT: ";
+          console.log("AFTER VERIFY");
+          const message = {
+            _id,
+            createdAt,
+            text: warning + signedText,
+            user
+          };
+          callback(message);
+        }
   
       } catch (err) {
-        console.log("PARSE ERROR ENCOUNTERED!");
+        console.log("GET ERROR ENCOUNTERED!");
         console.log(err.message);
       }
     });

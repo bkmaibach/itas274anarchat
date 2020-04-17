@@ -7,7 +7,7 @@ import getKeys from "../keys";
 import AsyncStorage from '@react-native-community/async-storage';
 import Contact from '../Contact';
 
-const NewConvoScreen = ({}) => {
+const NewConvoScreen = ({navigation}) => {
 
   const [publicKey, setPublicKey] = useState("");
   const [name, setName] = useState("")
@@ -18,12 +18,15 @@ const NewConvoScreen = ({}) => {
   }
   const onSuccess = async (e) => {
     try {
-      const qrString = e.data;
-      // console.log("OBTAINED QR STRING: " + qrString);
+      const qrString = e.data.replace("\"", "");
+      console.log("OBTAINED QR STRING: " + qrString);
 
       const [id, publicKey] = qrString.split(",");
-
-      await Contact.addRow(id, publicKey, name);
+      console.log("SAVING ID " + id);
+      console.log("SAVING PUBLIC KEY " + publicKey);
+      const chosenName = name !+ "" ? name : "Anonymous";
+      await Contact.addRow(id, publicKey, chosenName);
+      navigation.navigate('ConvoList');
     } catch (err) {
       console.log("Key did not save" + err);
     }
@@ -38,37 +41,41 @@ const NewConvoScreen = ({}) => {
     });
   }, []);
 
-  const qrData = {_id: Fire.uid, publicKey};
+  const qrData = Fire.uid+","+publicKey;
   const stringData = JSON.stringify(qrData);
-  console.log(stringData);
+  // console.log(stringData);
 
   return(
-    <>
+    <View style={styles.screen}>
+      <TextInput value={name} placeholder="Enter name here" onChangeText={name => handleName(name)} />
       <View style={styles.qrCode}>
         <QRCode
           value={stringData}
-          size={300}
+          size={330}
         />
       </View>
-      <View>
-        <QRCodeScanner
+      <QRCodeScanner
           onRead={onSuccess}
-          cameraStyle={{ height: 200, marginTop: 20, width: 200, alignSelf: 'center', justifyContent: 'center' }}
+          cameraStyle={styles.camera}
         />
-        <TextInput value={name} placeholder="something" onChangeText={name => handleName(name)} />
-      </View>
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create(
   {
+    screen: {
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    },
     qrCode: {
-      flexDirection: 'column',
-      justifyContent: 'center',
       alignItems: 'center',
       paddingBottom: 30,
-      paddingTop: 20
+
+    },
+    camera: {
+      width: '80%',
+      alignSelf: 'center',
     }
 
   }

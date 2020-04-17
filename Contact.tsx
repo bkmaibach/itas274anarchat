@@ -18,6 +18,7 @@ class Contact {
       () => {
         console.log("DB OPEN: " + JSON.stringify(this.db));
         this.db.executeSql('CREATE TABLE IF NOT EXISTS Contact( '
+        // this.db.executeSql('CREATE OR REPLACE TABLE Contact( '
         + '_id VARCHAR(45) PRIMARY KEY NOT NULL,' 
         + ' publicKey TEXT NOT NULL,'
         + ' name VARCHAR(45) NOT NULL);', 
@@ -40,8 +41,14 @@ class Contact {
     console.log("ADDING ID: " + id);
     console.log("ADDING PUBKEY: " + publicKey);
     console.log("ADDING NAME: " + name);
-    this.db.executeSql('INSERT INTO Contact (_id, publicKey, name)' 
+    this.db.executeSql('INSERT INTO Contact (_id, publicKey, name) ' 
     + `VALUES ('${id}', '${publicKey}', '${name}')`, [],
+    () => {});
+  }
+
+  deleteRow(id) {
+    console.log("DELETING ID: " + id);
+    this.db.executeSql(`DELETE FROM Contact WHERE _id = '${id}'`, [],
     () => {});
   }
 
